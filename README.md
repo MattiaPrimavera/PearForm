@@ -1,4 +1,4 @@
-# PearForm - Framework for Form creation [Android]
+# PearForm - Form Creation Framework [for Android]
 Tired of writing over and over again similar code for creating forms ?
 **PearForm** allows easily creating **Forms** in Android applications.
 
@@ -34,6 +34,21 @@ The **ACCOUNT_** constants stand for the **String** keys for the resulting **Bun
 ### Wish to customize your `FormView` ?
 A `FormView` is just an extension of `LinearLayout` android widget, which vertically places all declared fields views with a default **divider**.
 This implies you can use all `LinearLayout` attributes
+
+### Wanna add a field if a certain condition is true ?
+Use the `addIf()` method from `FormView`:
+
+```java
+boolean condition = getConditionValue();
+
+FormBuilder field = mFormView.getFormBuilder();
+mFormView
+    .add(field.text(ACCOUNT_FIRST_NAME, "Username"))
+    .addIf(condition, field.text(ACCOUNT_ZIP_CODE, "Zipcode")); // only adds the field if the condition is met
+    ... // Continues
+    .build();
+```
+
 
 ### Wanna create your own fields?
 Create a class that **extends** `FieldWidget` class, forcing to implement `IField` interface:
