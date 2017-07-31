@@ -1,9 +1,8 @@
-package com.mobilehealth.cardiac.core.tools.view.forms;
+package com.mprimavera.pearform.contracts;
 
 import android.os.Bundle;
 import android.view.View;
-
-import com.mobilehealth.cardiac.core.tools.view.forms.view.FormView;
+import com.mprimavera.pearform.view.FormView;
 
 public interface IForm {
     boolean validate();
