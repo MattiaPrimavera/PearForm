@@ -1,4 +1,4 @@
-# PearForm - Flexible easy Form creation with Android
+# PearForm - Framework for Form creation [Android]
 Tired of writing over and over again similar code for creating forms ?
 **PearForm** allows easily creating **Forms** in Android applications.
 
@@ -21,6 +21,10 @@ mFormView
     .add(field.text(ACCOUNT_LAST_NAME, "Lastname"))
     .add(field.text(ACCOUNT_EMAIL, "Email"))
     .add(field.text(ACCOUNT_ZIP_CODE, "Zipcode"));
+    .validateWith(mValidationButton, new IFormValidator() {
+        @Override public void onSuccess(Bundle result) {}
+        @Override public void onError() {}
+    })
     .build();
 ```
 
@@ -88,9 +92,17 @@ public class Text extends FieldWidget {
 ```
 
 ## Synopsis - Why and What
-From an abstract point of view, a **Form** (`FormView` class) is a list of rows or **Fields** (View widgets implementing `IField` interface).  
+When including multiple forms within an application, it's easy to start writing similar boiler plate code and we end up always facing similar debug and implementation problems.
+I wanted to help developer **focus on the business logic** by providing a **Framework** for creating **Input Form Views**.  
+**PearForm** abstracts and makes easy handling common form problems, such as:
+- validation
+- prefill
+- instanciation
+- result collect
 
-Every **Field** has its own UI and logic, which consist in `IField` interface implementation:
+A **Form** (`FormView` class) is considered here as a list of **Input Components** or **Fields** (View widgets implementing `IField` interface), that are inserted into the **FormView** (a `LinearLayout` extension).
+
+Every **Field** has its own UI and logic, and implements `IField` interface:
 
 ```java
 public interface IField {
@@ -101,16 +113,13 @@ public interface IField {
 }
 ```
 
-The `FormView` takes care of **Fields**
-- instanciation
-- validation
-- prefill
-- result collect
-
-by iterating on the **Fields** list and delegating each field of the same action (`FormView` asks every **Field** to validate and sums up validation results).
+Once clicked on the declared validation button, the `FormView` iterates on the **Fields list**, and 
+iterates on the **Fields** list to ask each one of them if its input is valid in to globally validate the form.
+If the validation phase ends with success, a **Bundle result** with the keys specified in the construction face is collected and passed to the **onSuccess** callback, otherwise the **onError** callback get executed.
 
 This design gives the developer extreme flexibility since the FormView being a LinearLayout means not only we can use all its attributes but also manipulate every field as a simple android view. By defining your own set of Fields, you won't have to rewrite the same boilerplate code for all new forms, and code reuse makes sure the UI is consistent.
 
-`PearForm` is more correctly a `Framework`, since it forces the developer to use the same `Frame` and reuse `Components` in every form creation, still providing for full customization, simply adding a new component. If you like already existing components, you may just wanna **extend** their **IField** functionnalities and keep the rest of the widget code.
+`PearForm` is a `Framework`, since it forces the developer to use the same `Frame` and reuse `Components` in every form creation. It provides great flexibility for customization, simply by adding a new component.
+If you like already existing components, you may just wanna **extend** their **IFieldValidator** implementation and keep the rest of the widget as it is.
 
 To clearify Form creation code, I chose using the **Builder Pattern** within the `FormView`, in order to achieve a simple "declarative" creation.
