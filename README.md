@@ -130,7 +130,7 @@ public interface IField {
 
 Once clicked on the declared validation button, the `FormView` iterates on the **Fields list**, and 
 iterates on the **Fields** list to ask each one of them if its input is valid in to globally validate the form.
-If the validation phase ends with success, a **Bundle result** with the keys specified in the construction face is collected and passed to the **onSuccess** callback, otherwise the **onError** callback get executed.
+If the validation phase ends with success, a **Bundle result** with the keys specified in the construction phase is collected and passed to the **onSuccess** callback, otherwise the **onError** callback get executed.
 
 This design gives the developer extreme flexibility since the FormView being a LinearLayout means not only we can use all its attributes but also manipulate every field as a simple android view. By defining your own set of Fields, you won't have to rewrite the same boilerplate code for all new forms, and code reuse makes sure the UI is consistent.
 
