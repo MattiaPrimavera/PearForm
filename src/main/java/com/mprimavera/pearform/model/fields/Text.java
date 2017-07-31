@@ -1,4 +1,4 @@
-package com.mobilehealth.cardiac.core.tools.view.forms.model.fields;
+package com.mprimavera.pearform.model.fields;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,8 +6,9 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.mobilehealth.cardiac.R;
-import com.mobilehealth.cardiac.core.tools.view.forms.model.FieldWidget;
+import com.mprimavera.pearform.contracts.IValidator;
+import com.mprimavera.pearform.R;
+import com.mprimavera.pearform.model.FieldWidget;
 
 public class Text extends FieldWidget {
     private TextView mTextView;
@@ -57,5 +58,10 @@ public class Text extends FieldWidget {
     @Override
     public void reset() {
         mTextView.setText(null);
+    }
+
+    @Override
+    public void setValidator(IValidator validator) {
+
     }
 }

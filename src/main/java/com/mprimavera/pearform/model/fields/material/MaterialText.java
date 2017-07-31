@@ -1,4 +1,4 @@
-package com.mobilehealth.cardiac.core.tools.view.forms.model.fields.material;
+package com.mprimavera.pearform.model.fields.material;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,12 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
-import com.mobilehealth.cardiac.R;
-import com.mobilehealth.cardiac.core.tools.view.forms.model.FieldWidget;
+import android.util.Log;
+import com.mprimavera.pearform.contracts.IValidator;
+import com.mprimavera.pearform.R;
+import com.mprimavera.pearform.model.FieldWidget;
 
 public class MaterialText extends FieldWidget {
     private TextInputLayout mInputLayout;
     private TextInputEditText mInputText;
+    private IFieldValidator mValidator;
 
     public MaterialText(Context context) {
         super(context);
@@ -31,18 +34,21 @@ public class MaterialText extends FieldWidget {
 
     public MaterialText init(String hint) {
         inflate(getContext(), R.layout.form_material_text_field, this);
-        mInputLayout = (TextInputLayout) findViewById(R.id.layout);
+        mValidator = null;
+        mInputLayout = findViewById(R.id.layout);
         mInputLayout.setHintEnabled(true);
         mInputLayout.setHintAnimationEnabled(true);
         mInputLayout.setHint(hint);
 
-        mInputText = (TextInputEditText) findViewById(R.id.input_text);
+        mInputText = findViewById(R.id.input_text);
         return this;
     }
 
     @Override
     public boolean validate() {
-        return true;
+        if(mValidator != null) {
+            return mValidator.validate(mInputText);
+        } else return true; // Default to NOT_REQUIRED
     }
 
     @Override
@@ -61,5 +67,14 @@ public class MaterialText extends FieldWidget {
     @Override
     public void reset() {
         mInputText.setText(null);
+    }
+
+    @Override
+    public void setValidator(IValidator validator) {
+        mValidator = (IFieldValidator) validator;
+    }
+
+    public interface IFieldValidator extends IValidator {
+        boolean validate(TextInputEditText textView);
     }
 }

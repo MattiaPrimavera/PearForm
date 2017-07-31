@@ -1,11 +1,11 @@
-package com.mobilehealth.cardiac.core.tools.view.forms.model;
+package com.mprimavera.pearform.model;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import com.mobilehealth.cardiac.core.tools.view.forms.IField;
+import com.mprimavera.pearform.contracts.IField;
 
 abstract public class FieldWidget extends LinearLayout implements IField {
     protected String mResultKey;

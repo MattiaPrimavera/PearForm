@@ -1,17 +1,18 @@
-package com.mobilehealth.cardiac.core.tools.view.forms.view;
+package com.mprimavera.pearform.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.mobilehealth.cardiac.R;
-import com.mobilehealth.cardiac.core.tools.view.forms.IField;
-import com.mobilehealth.cardiac.core.tools.view.forms.IForm;
-import com.mobilehealth.cardiac.core.tools.view.forms.IFormValidationListener;
+import com.mprimavera.pearform.contracts.IField;
+import com.mprimavera.pearform.contracts.IForm;
+import com.mprimavera.pearform.contracts.IFormValidationListener;
+import com.mprimavera.pearform.R;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,13 +90,16 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     @Override
-    public FormView validateWith(View button, IFormValidationListener listener) {
-        button.setOnClickListener((View v) -> {
-            if(validate()) {
-                Bundle resultBundle = getResult();
-                listener.onSuccess(resultBundle);
-            } else {
-                listener.onError();
+    public FormView validateWith(View button, final IFormValidationListener listener) {
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validate()) {
+                    Bundle resultBundle = getResult();
+                    listener.onSuccess(resultBundle);
+                } else {
+                    listener.onError();
+                }
             }
         });
 

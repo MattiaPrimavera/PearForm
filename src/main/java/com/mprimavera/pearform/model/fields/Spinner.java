@@ -1,14 +1,17 @@
-package com.mobilehealth.cardiac.core.tools.view.forms.model.fields;
+package com.mprimavera.pearform.model.fields;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import com.mobilehealth.cardiac.R;
-import com.mobilehealth.cardiac.core.tools.view.forms.model.FieldWidget;
+
+import com.mprimavera.pearform.contracts.IValidator;
+import com.mprimavera.pearform.R;
+import com.mprimavera.pearform.model.FieldWidget;
 
 public class Spinner extends FieldWidget {
     private android.widget.Spinner mSpinner;
+    private IFieldValidator mValidator;
 
     public Spinner(Context context) {
         super(context);
@@ -32,7 +35,7 @@ public class Spinner extends FieldWidget {
 
     public void init() {
         inflate(getContext(), R.layout.form_input_spinner_field, this);
-        mSpinner = (android.widget.Spinner) findViewById(R.id.spinner);
+        mSpinner = findViewById(R.id.spinner);
     }
 
     @Override public boolean validate() {
@@ -56,5 +59,13 @@ public class Spinner extends FieldWidget {
     @Override
     public void reset() {
         mSpinner.setSelection(0);
+    }
+
+    @Override
+    public void setValidator(IValidator validator) {
+        mValidator = (IFieldValidator) validator;
+    }
+
+    public static interface IFieldValidator extends IValidator {
     }
 }

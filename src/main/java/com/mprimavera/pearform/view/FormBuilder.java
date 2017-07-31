@@ -1,8 +1,9 @@
-package com.mobilehealth.cardiac.core.tools.view.forms.view;
+package com.mprimavera.pearform.view;
 
 import android.content.Context;
-import com.mobilehealth.cardiac.core.tools.view.forms.model.fields.Spinner;
-import com.mobilehealth.cardiac.core.tools.view.forms.model.fields.material.MaterialText;
+
+import com.mprimavera.pearform.model.fields.Spinner;
+import com.mprimavera.pearform.model.fields.material.MaterialText;
 
 public class FormBuilder {
     private Context mContext;
@@ -18,6 +19,13 @@ public class FormBuilder {
     public MaterialText text(String resultBundleKey, String hint) {
         MaterialText text = new MaterialText(mContext).init(hint);
         text.setResultKey(resultBundleKey);
+        return text;
+    }
+
+    public MaterialText text(String resultBundleKey, String hint, MaterialText.IFieldValidator fieldValidator) {
+        MaterialText text = new MaterialText(mContext).init(hint);
+        text.setResultKey(resultBundleKey);
+        text.setValidator(fieldValidator);
         return text;
     }
 
