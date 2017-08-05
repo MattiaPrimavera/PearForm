@@ -1,14 +1,19 @@
 package com.mprimavera.pearform.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.mprimavera.pearform.contracts.IField;
 
 abstract public class FieldWidget extends LinearLayout implements IField {
     protected String mResultKey;
+    protected ImageView mLeftIcon;
 
     public FieldWidget(Context context) {
         super(context);
@@ -31,5 +36,25 @@ abstract public class FieldWidget extends LinearLayout implements IField {
 
     @Override public void setResultKey(String key) {
         mResultKey = key;
+    }
+
+
+    public void setIconResource(int resource) {
+        mLeftIcon.setImageResource(resource);
+        this.showIcon();
+    }
+
+    public void setImageDrawable(Drawable drawable) {
+        mLeftIcon.setImageDrawable(drawable);
+        this.showIcon();
+    }
+
+    public void setImageBitmap(Bitmap bitmap) {
+        mLeftIcon.setImageBitmap(bitmap);
+        this.showIcon();
+    }
+
+    public void showIcon() {
+        mLeftIcon.setVisibility(View.VISIBLE);
     }
 }
