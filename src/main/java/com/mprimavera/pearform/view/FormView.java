@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.mprimavera.pearform.contracts.IField;
@@ -70,7 +71,7 @@ public class FormView extends LinearLayout implements IForm {
             IField field = (IField)view;
             row = new FormRow(view, true);
         } catch (ClassCastException e) {
-            row = new FormRow(view, true);
+            row = new FormRow(view, false);
         }
         mRows.add(row);
         return this;
