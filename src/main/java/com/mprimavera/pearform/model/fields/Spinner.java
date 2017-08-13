@@ -4,15 +4,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.FieldWidget;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.Serializable;
+import java.util.HashMap;
+
 public class Spinner extends FieldWidget {
     private MaterialBetterSpinner mSpinner;
+    private HashMap<Integer, Object> mElements;
     private IFieldValidator mValidator;
+    private SpinnerListener mListener;
+    private boolean mItemSelected;
+    private int mSelectedIndex;
+
+    public interface SpinnerListener {
+        void onItemSelected(Object item);
+    }
 
     public Spinner(Context context) {
         super(context);
@@ -36,7 +50,10 @@ public class Spinner extends FieldWidget {
 
     public void init() {
         inflate(getContext(), R.layout.form_input_spinner_field, this);
-        mSpinner = findViewById(R.id.materialSpinner);
+        mElements = new HashMap<>();
+        mItemSelected = false;
+        mListener = null;
+        mSpinner = (MaterialBetterSpinner) findViewById(R.id.materialSpinner);
     }
 
     public Spinner hintColor(int color) {
@@ -69,20 +86,47 @@ public class Spinner extends FieldWidget {
         return this;
     }
 
-    public Spinner elements(String[] elements) {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, elements);
+    public Spinner elements(String[] labels, Object[] elements) {
+        for(int i = 0; i < elements.length; i++) {
+            mElements.put(i, elements[i]);
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, labels);
         mSpinner.setAdapter(arrayAdapter);
         return this;
     }
 
+    public Spinner listener(SpinnerListener listener) {
+        mListener = listener;
+        this.setupListener();
+        return this;
+    }
+
+    public Spinner build() {
+        this.setupListener();
+        return this;
+    }
+
+    private void setupListener() {
+        mSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mItemSelected = true;
+                mSelectedIndex = position;
+                if (mListener != null) mListener.onItemSelected(mElements.get(position));
+            }
+        });
+    }
+
     @Override public boolean validate() {
-        return true;
+        if(mItemSelected) return true;
+        else return false;
     }
 
     @Override
     public Bundle getValue() {
         Bundle bundle = new Bundle();
-//        bundle.putString(mResultKey, Integer.toString(mSpinner.()));
+        bundle.putSerializable(mResultKey, (Serializable) mElements.get(mSelectedIndex));
         return bundle;
     }
 
@@ -90,7 +134,8 @@ public class Spinner extends FieldWidget {
     public void prefill(Bundle bundle) {
         String value = bundle.getString(mResultKey);
         int selection = Integer.parseInt(value);
-        mSpinner.setSelection(selection);
+        if(selection > 0 && selection < (mElements.size() - 1))
+            mSpinner.setSelection(selection);
     }
 
     @Override
