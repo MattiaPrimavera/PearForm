@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
 import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.FieldWidget;
@@ -35,12 +37,13 @@ public class MaterialText extends FieldWidget {
     public MaterialText init(String hint) {
         inflate(getContext(), R.layout.form_material_text_field, this);
         mValidator = null;
-        mInputLayout = findViewById(R.id.layout);
+        mInputLayout = (TextInputLayout) findViewById(R.id.layout);
         mInputLayout.setHintEnabled(true);
         mInputLayout.setHintAnimationEnabled(true);
         mInputLayout.setHint(hint);
 
-        mInputText = findViewById(R.id.input_text);
+        mInputText = (TextInputEditText) findViewById(R.id.input_text);
+        mLeftIcon = (ImageView) findViewById(R.id.icon);
         return this;
     }
 
