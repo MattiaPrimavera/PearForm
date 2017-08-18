@@ -6,9 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
-import android.view.View;
+import android.util.Log;
 import android.widget.ImageView;
-
 import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.FieldWidget;
@@ -17,6 +16,7 @@ public class MaterialText extends FieldWidget {
     private TextInputLayout mInputLayout;
     private TextInputEditText mInputText;
     private IFieldValidator mValidator;
+    private String mError;
 
     public MaterialText(Context context) {
         super(context);
@@ -34,14 +34,14 @@ public class MaterialText extends FieldWidget {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public MaterialText init(String hint) {
+    public MaterialText init(String hint, String error) {
         inflate(getContext(), R.layout.form_material_text_field, this);
         mValidator = null;
         mInputLayout = (TextInputLayout) findViewById(R.id.layout);
         mInputLayout.setHintEnabled(true);
         mInputLayout.setHintAnimationEnabled(true);
         mInputLayout.setHint(hint);
-
+        mError = error;
         mInputText = (TextInputEditText) findViewById(R.id.input_text);
         mLeftIcon = (ImageView) findViewById(R.id.icon);
         return this;
@@ -50,7 +50,17 @@ public class MaterialText extends FieldWidget {
     @Override
     public boolean validate() {
         if(mValidator != null) {
-            return mValidator.validate(mInputText);
+            boolean valid = mValidator.validate(mInputText);
+            if(!valid) {
+                if(mError != null) {
+                    mInputLayout.setErrorEnabled(true);
+                    mInputLayout.setError(mError);
+                }
+            } else {
+                mInputLayout.setError(null);
+                mInputLayout.setErrorEnabled(false);
+            }
+            return valid;
         } else return true; // Default to NOT_REQUIRED
     }
 
