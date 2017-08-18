@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,13 +11,13 @@ import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.FieldWidget;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class Spinner extends FieldWidget {
     private MaterialBetterSpinner mSpinner;
     private HashMap<Integer, Object> mElements;
+    private String[] mLabels;
     private IFieldValidator mValidator;
     private SpinnerListener mListener;
     private boolean mItemSelected;
@@ -53,6 +52,8 @@ public class Spinner extends FieldWidget {
         mElements = new HashMap<>();
         mItemSelected = false;
         mListener = null;
+        mLabels = null;
+        mResultKey = null;
         mSpinner = (MaterialBetterSpinner) findViewById(R.id.materialSpinner);
     }
 
@@ -62,6 +63,12 @@ public class Spinner extends FieldWidget {
 
     public Spinner hint(int hint) {
         mSpinner.setHint(hint);
+        return this;
+    }
+
+    public Spinner hints(String hint) {
+        this.hint(hint);
+        this.floatingHint(hint);
         return this;
     }
 
@@ -86,11 +93,18 @@ public class Spinner extends FieldWidget {
         return this;
     }
 
-    public Spinner elements(String[] labels, Object[] elements) {
-        for(int i = 0; i < elements.length; i++) {
-            mElements.put(i, elements[i]);
-        }
+    public Spinner resultKey(String key) {
+        mResultKey = key;
+        return this;
+    }
 
+    public Spinner elements(String[] labels, Object[] elements) {
+        if(labels.length != elements.length) return null;
+
+        for(int i = 0; i < elements.length; i++)
+            mElements.put(i, elements[i]);
+
+        mLabels = labels;
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, labels);
         mSpinner.setAdapter(arrayAdapter);
         return this;
@@ -111,15 +125,15 @@ public class Spinner extends FieldWidget {
         mSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mItemSelected = true;
-                mSelectedIndex = position;
-                if (mListener != null) mListener.onItemSelected(mElements.get(position));
+            mItemSelected = true;
+            mSelectedIndex = position;
+            if (mListener != null) mListener.onItemSelected(mElements.get(position));
             }
         });
     }
 
     @Override public boolean validate() {
-        if(mItemSelected) return true;
+        if(mItemSelected) return true; // Requires selection by default
         else return false;
     }
 
@@ -130,17 +144,29 @@ public class Spinner extends FieldWidget {
         return bundle;
     }
 
+    public Spinner prefillWhen(boolean condition, Bundle bundle) {
+        if(condition) this.prefill(bundle);
+        return this;
+    }
+
     @Override
     public void prefill(Bundle bundle) {
-        String value = bundle.getString(mResultKey);
-        int selection = Integer.parseInt(value);
-        if(selection > 0 && selection < (mElements.size() - 1))
-            mSpinner.setSelection(selection);
+        if(mResultKey != null) {
+            String value = bundle.getString(mResultKey, null);
+            if(value != null) {
+                int selection = Integer.parseInt(value);
+                if(selection > 0 && selection < (mLabels.length - 1)) {
+                    mSpinner.setText(mLabels[selection]);
+                    mSelectedIndex = selection;
+                }
+            }
+        }
     }
 
     @Override
     public void reset() {
-        mSpinner.setSelection(0);
+        mItemSelected = false;
+        mSpinner.setText(null);
     }
 
     @Override
