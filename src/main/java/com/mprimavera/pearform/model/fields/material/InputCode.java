@@ -83,6 +83,8 @@ public class InputCode extends MaterialText {
         return this;
     }
 
+    public TextInputEditText getTextField() { return mInputText; }
+
     public InputCode length(int length) {
         mMaxLength = length;
         mValidator = new IFieldValidator() { // Check code length is exactly 'length'
