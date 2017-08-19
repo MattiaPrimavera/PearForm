@@ -6,26 +6,23 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ImageView;
 import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.FieldWidget;
 
 public class MaterialText extends FieldWidget {
-    private TextInputLayout mInputLayout;
-    private TextInputEditText mInputText;
-    private IFieldValidator mValidator;
-    private String mError;
+    protected TextInputLayout mInputLayout;
+    protected TextInputEditText mInputText;
+    protected IFieldValidator mValidator;
+    protected String mError;
 
     public MaterialText(Context context) {
         super(context);
     }
-
     public MaterialText(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
-
     public MaterialText(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -35,8 +32,8 @@ public class MaterialText extends FieldWidget {
     }
 
     public MaterialText init(String hint, String error) {
-        inflate(getContext(), R.layout.form_material_text_field, this);
-        mValidator = null;
+        this.inflateLayout();
+//        mValidator = null;
         mInputLayout = (TextInputLayout) findViewById(R.id.layout);
         mInputLayout.setHintEnabled(true);
         mInputLayout.setHintAnimationEnabled(true);
@@ -47,19 +44,18 @@ public class MaterialText extends FieldWidget {
         return this;
     }
 
+    protected void inflateLayout() {
+        inflate(getContext(), R.layout.form_material_text_field, this);
+    }
+
     @Override
     public boolean validate() {
         if(mValidator != null) {
             boolean valid = mValidator.validate(mInputText);
             if(!valid) {
-                if(mError != null) {
-                    mInputLayout.setErrorEnabled(true);
-                    mInputLayout.setError(mError);
-                }
-            } else {
-                mInputLayout.setError(null);
-                mInputLayout.setErrorEnabled(false);
-            }
+                if(mError != null)
+                    showError(mError);
+            } else hideError();
             return valid;
         } else return true; // Default to NOT_REQUIRED
     }
@@ -89,5 +85,16 @@ public class MaterialText extends FieldWidget {
 
     public interface IFieldValidator extends IValidator {
         boolean validate(TextInputEditText textView);
+    }
+
+    public void hideError() {
+        mInputLayout.setErrorEnabled(false);
+        mInputLayout.setError(null);
+    }
+
+    public void showError(String error) {
+        mError = error;
+        mInputLayout.setErrorEnabled(true);
+        mInputLayout.setError(error);
     }
 }
