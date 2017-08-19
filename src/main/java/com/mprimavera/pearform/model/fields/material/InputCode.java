@@ -1,7 +1,7 @@
 package com.mprimavera.pearform.model.fields.material;
 
-import android.app.Service;
 import android.content.Context;
+import android.os.Build;
 import android.support.design.widget.TextInputEditText;
 import android.util.AttributeSet;
 import android.support.annotation.Nullable;
@@ -63,13 +63,18 @@ public class InputCode extends MaterialText {
         }
 
         if(mFocus) {
-            if (mInputText == null)
-                return null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mInputText.setShowSoftInputOnFocus(true);
+            }
 
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(mInputText, InputMethodManager.SHOW_IMPLICIT);
+            if(mInputText.requestFocus()) {
+                InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
         }
 
+        // Show button to hide/show password by default
+        mInputLayout.setPasswordVisibilityToggleEnabled(true);
         return this;
     }
 
