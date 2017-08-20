@@ -69,7 +69,7 @@ public class InputCode extends MaterialText {
 
             if(mInputText.requestFocus()) {
                 InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                imm.showSoftInput(mInputText, InputMethodManager.SHOW_IMPLICIT);
             }
         }
 
