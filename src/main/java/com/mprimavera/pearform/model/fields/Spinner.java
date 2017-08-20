@@ -158,6 +158,7 @@ public class Spinner extends FieldWidget {
                 if(selection > 0 && selection < (mLabels.length - 1)) {
                     mSpinner.setText(mLabels[selection]);
                     mSelectedIndex = selection;
+                    mItemSelected = true;
                 }
             }
         }
