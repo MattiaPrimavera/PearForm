@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.mprimavera.pearform.contracts.IField;
@@ -128,6 +129,21 @@ public class FormView extends LinearLayout implements IForm {
         return this;
     }
 
+    public FormView validateWith(MenuItem menuItem, final IFormValidationListener listener) {
+        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(validate()) {
+                    Bundle resultBundle = getResult();
+                    listener.onSuccess(resultBundle);
+                } else listener.onError();
+                return false;
+            }
+        });
+
+        return this;
+    }
+
     @Override
     public FormView validateWith(View button, final IFormValidationListener listener) {
         button.setOnClickListener(new OnClickListener() {
@@ -184,7 +200,8 @@ public class FormView extends LinearLayout implements IForm {
             if(row.isField()) {
                 IField field = (IField) row.getView();
                 Bundle fieldResult = field.getValue();
-                bundle.putAll(fieldResult);
+                if(fieldResult != null)
+                    bundle.putAll(fieldResult);
             }
         }
         return bundle;
