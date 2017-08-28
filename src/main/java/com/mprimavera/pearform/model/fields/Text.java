@@ -38,6 +38,11 @@ public class Text extends FieldWidget {
         mTextView = (TextView) findViewById(R.id.input_text);
     }
 
+    public void setTextColor(int color) {
+        mTextView.setTextColor(color);
+    }
+
+    public void setText(String text) { mTextView.setText(text); }
     @Override public boolean validate() {
         return true;
     }
