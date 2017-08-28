@@ -14,21 +14,27 @@ import com.mprimavera.pearform.contracts.IField;
 abstract public class FieldWidget extends LinearLayout implements IField {
     protected String mResultKey;
     protected ImageView mLeftIcon;
+    protected Context mContext;
+    protected LinearLayout mLayout;
 
     public FieldWidget(Context context) {
         super(context);
+        mContext = context;
     }
 
     public FieldWidget(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
     }
 
     public FieldWidget(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
     }
 
     public FieldWidget(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        mContext = context;
     }
 
     @Override public abstract boolean validate();
