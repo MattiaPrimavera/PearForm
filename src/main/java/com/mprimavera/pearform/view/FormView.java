@@ -104,7 +104,7 @@ public class FormView extends LinearLayout implements IForm {
         inflate(getContext(), R.layout.widget_form_view, this);
         mRows = new ArrayList<>();
         mFormBuilder = new FormBuilder(getContext());
-        mLayout = (LinearLayout) findViewById(R.id.layout);
+        mLayout = findViewById(R.id.layout);
     }
 
     public FormView build() {
