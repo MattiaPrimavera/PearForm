@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,17 +15,17 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class Spinner extends FieldWidget {
+public class Spinner<T extends Serializable> extends FieldWidget {
     private MaterialBetterSpinner mSpinner;
-    private HashMap<Integer, Object> mElements;
+    private HashMap<Integer, T> mElements;
     private String[] mLabels;
     private IFieldValidator mValidator;
     private SpinnerListener mListener;
     private boolean mItemSelected;
     private int mSelectedIndex;
 
-    public interface SpinnerListener {
-        void onItemSelected(Object item);
+    public interface SpinnerListener<T> {
+        void onItemSelected(T item);
     }
 
     public Spinner(Context context) {
@@ -54,7 +55,7 @@ public class Spinner extends FieldWidget {
         mListener = null;
         mLabels = null;
         mResultKey = null;
-        mSpinner = (MaterialBetterSpinner) findViewById(R.id.materialSpinner);
+        mSpinner = findViewById(R.id.materialSpinner);
     }
 
     public Spinner hintColor(int color) {
@@ -102,7 +103,7 @@ public class Spinner extends FieldWidget {
         if(labels.length != elements.length) return null;
 
         for(int i = 0; i < elements.length; i++)
-            mElements.put(i, elements[i]);
+            mElements.put(i, (T) elements[i]);
 
         mLabels = labels;
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, labels);
@@ -140,7 +141,9 @@ public class Spinner extends FieldWidget {
     @Override
     public Bundle getValue() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(mResultKey, (Serializable) mElements.get(mSelectedIndex));
+
+        bundle.remove(mResultKey);
+        bundle.putSerializable(mResultKey, mElements.get(mSelectedIndex));
         return bundle;
     }
 
@@ -152,12 +155,11 @@ public class Spinner extends FieldWidget {
     @Override
     public void prefill(Bundle bundle) {
         if(mResultKey != null) {
-            String value = bundle.getString(mResultKey, null);
-            if(value != null) {
-                int selection = Integer.parseInt(value);
-                if(selection > 0 && selection < (mLabels.length - 1)) {
-                    mSpinner.setText(mLabels[selection]);
-                    mSelectedIndex = selection;
+            int value = bundle.getInt(mResultKey);
+            if(value != 0) {
+                if(value > 0 && value < (mLabels.length - 1)) {
+                    mSpinner.setText(mLabels[value]);
+                    mSelectedIndex = value;
                     mItemSelected = true;
                 }
             }
@@ -175,6 +177,5 @@ public class Spinner extends FieldWidget {
         mValidator = (IFieldValidator) validator;
     }
 
-    public static interface IFieldValidator extends IValidator {
-    }
+    public static interface IFieldValidator extends IValidator {}
 }
