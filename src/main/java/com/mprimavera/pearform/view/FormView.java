@@ -18,6 +18,13 @@ import com.mprimavera.pearform.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
+
 public class FormView extends LinearLayout implements IForm {
     private List<FormRow> mRows;
     private Context mContext;
@@ -144,17 +151,37 @@ public class FormView extends LinearLayout implements IForm {
         return this;
     }
 
+    public Observable<Bundle> rxValidateWith(final View button) {
+        final Observable formResult = Observable.create(new ObservableOnSubscribe() {
+            @Override
+            public void subscribe(final @NonNull ObservableEmitter e) throws Exception {
+            button.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                if(validate()) {
+                    Bundle resultBundle = getResult();
+                    e.onNext(resultBundle);
+                    e.onComplete();
+                } else e.onError(new Exception("Form not Valid"));
+            }
+            });
+            }
+        });
+
+        return formResult;
+    }
+
     @Override
     public FormView validateWith(View button, final IFormValidationListener listener) {
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validate()) {
-                    Bundle resultBundle = getResult();
-                    listener.onSuccess(resultBundle);
-                } else {
-                    listener.onError();
-                }
+            if(validate()) {
+                Bundle resultBundle = getResult();
+                listener.onSuccess(resultBundle);
+            } else {
+                listener.onError();
+            }
             }
         });
 
