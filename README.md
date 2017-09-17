@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/MattiaPrimavera/PearForm.svg)](https://jitpack.io/#MattiaPrimavera/PearForm)
+
 # PearForm - Form Creation Framework [for Android]
 Tired of writing over and over again similar code for creating forms ?
 **PearForm** allows easily creating **Forms** in Android applications.
