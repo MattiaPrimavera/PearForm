@@ -13,42 +13,46 @@ public class FormBuilder {
     }
 
     public MaterialText text(String hint, String error) {
-        return new MaterialText(mContext).init(hint, error);
+        return new MaterialText(mContext)
+                .hint(hint)
+                .error(error);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error) {
-        MaterialText text = new MaterialText(mContext).init(hint, error);
-        text.setResultKey(resultBundleKey);
-        return text;
+        return new MaterialText(mContext)
+            .hint(hint)
+            .error(error)
+            .resultKey(resultBundleKey);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error, int iconResource) {
-        MaterialText text = new MaterialText(mContext).init(hint, error);
-        text.setResultKey(resultBundleKey);
-        text.setIconResource(iconResource);
-        return text;
+        return new MaterialText(mContext)
+                .hint(hint)
+                .error(error)
+                .resultKey(resultBundleKey);
     }
 
     public MaterialText text(String resultBundleKey, String hint, MaterialText.IFieldValidator fieldValidator) {
-        MaterialText text = new MaterialText(mContext).init(hint, null);
-        text.setResultKey(resultBundleKey);
-        text.setValidator(fieldValidator);
-        return text;
+        return new MaterialText(mContext)
+                .hint(hint)
+                .resultKey(resultBundleKey)
+                .validator(fieldValidator);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error, MaterialText.IFieldValidator fieldValidator) {
-        MaterialText text = new MaterialText(mContext).init(hint, error);
-        text.setResultKey(resultBundleKey);
-        text.setValidator(fieldValidator);
-        return text;
+        return new MaterialText(mContext)
+                .hint(hint)
+                .error(error)
+                .resultKey(resultBundleKey)
+                .validator(fieldValidator);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error, int iconResource, MaterialText.IFieldValidator fieldValidator) {
-        MaterialText text = new MaterialText(mContext).init(hint, error);
-        text.setResultKey(resultBundleKey);
-        text.setValidator(fieldValidator);
-        text.setIconResource(iconResource);
-        return text;
+        return new MaterialText(mContext)
+                .hint(hint)
+                .error(error)
+                .resultKey(resultBundleKey)
+                .validator(fieldValidator);
     }
 
     public Spinner spinner(String resultBundleKey) {
