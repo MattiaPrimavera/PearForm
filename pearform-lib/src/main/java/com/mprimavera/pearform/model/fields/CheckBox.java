@@ -39,9 +39,29 @@ public class CheckBox extends FieldWidget {
 
     private void init() {
         inflate(getContext(), R.layout.form_checkbox_field, this);
-        this.icon = (ImageView) findViewById(R.id.icon);
-        this.label = (TextView) findViewById(R.id.label);
-        this.checkBox = (android.widget.CheckBox) findViewById(R.id.checkBox);
+        this.icon = findViewById(R.id.icon);
+        this.label = findViewById(R.id.label);
+        this.checkBox = findViewById(R.id.checkBox);
+    }
+
+    public CheckBox label(int res) {
+        this.setLabel(res);
+        return this;
+    }
+
+    public CheckBox label(String label) {
+        this.setLabel(label);
+        return this;
+    }
+
+    public CheckBox icon(int res) {
+        this.setIcon(res);
+        return this;
+    }
+
+    public CheckBox checked() {
+        this.setChecked(true);
+        return this;
     }
 
     public void setChecked(boolean checked) { this.checkBox.setChecked(checked); }
