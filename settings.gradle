@@ -1,0 +1,2 @@
+include ':app', ':pearformm'
+project(':pearformm').projectDir = new File('pearform')
