@@ -10,6 +10,7 @@ public interface IForm {
     Bundle getParams();
     FormView prefillWhen(boolean prefill, Bundle bundle);
     FormView validateWith(View button, IFormValidationListener listener);
+    FormView resetWith(View button);
     void reset();
     void init();
 }

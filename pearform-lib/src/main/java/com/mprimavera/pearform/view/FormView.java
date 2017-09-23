@@ -151,6 +151,8 @@ public class FormView extends LinearLayout implements IForm {
         return this;
     }
 
+
+
     public Observable<Bundle> rxValidateWith(final View button) {
         final Observable formResult = Observable.create(new ObservableOnSubscribe() {
             @Override
@@ -182,6 +184,18 @@ public class FormView extends LinearLayout implements IForm {
             } else {
                 listener.onError();
             }
+            }
+        });
+
+        return this;
+    }
+
+    @Override
+    public FormView resetWith(View button) {
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reset();
             }
         });
 
