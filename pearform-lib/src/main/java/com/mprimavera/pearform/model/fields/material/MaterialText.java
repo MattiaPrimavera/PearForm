@@ -127,4 +127,18 @@ public class MaterialText extends FieldWidget {
         mInputLayout.setErrorEnabled(true);
         mInputLayout.setError(error);
     }
+
+    public static MaterialText.IFieldValidator minLengthValidator(final int length) {
+        return new IFieldValidator() {
+            @Override
+            public boolean validate(TextInputEditText textView) {
+                String text = textView.getText().toString();
+                if (text == null) return false;
+                else {
+                    if (text.length() > length) return true;
+                    else return false;
+                }
+            }
+        };
+    }
 }
