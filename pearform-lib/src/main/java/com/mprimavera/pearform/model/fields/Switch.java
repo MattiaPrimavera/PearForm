@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +16,7 @@ import com.mprimavera.pearform.model.FieldWidget;
 import com.mprimavera.pearform.tools.DrawableTools;
 
 public class Switch extends FieldWidget {
-    private android.widget.Switch mSwitch;
+    private SwitchCompat mSwitch;
     private IFieldValidator mValidator;
     private ImageView mLeftIcon;
     private TextView mTextView;

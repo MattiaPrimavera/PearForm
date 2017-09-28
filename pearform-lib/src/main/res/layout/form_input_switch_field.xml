@@ -15,7 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
+        android:theme="@style/SwitchTheme"
         android:layout_weight="0.3"
         android:layout_gravity="right"
         android:layout_height="match_parent"
