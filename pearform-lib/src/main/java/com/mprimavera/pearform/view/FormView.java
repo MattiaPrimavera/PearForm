@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,9 +20,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 
 public class FormView extends LinearLayout implements IForm {
     private List<FormRow> mRows;
@@ -137,6 +134,7 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     public FormView validateWith(MenuItem menuItem, final IFormValidationListener listener) {
+        if(listener == null) return null;
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -151,7 +149,14 @@ public class FormView extends LinearLayout implements IForm {
         return this;
     }
 
+    public FormView background(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            this.setBackgroundColor(getContext().getColor(color));
+        else
+            this.setBackgroundColor(color);
 
+        return this;
+    }
 
     public Observable<Bundle> rxValidateWith(final View button) {
         final Observable formResult = Observable.create(new ObservableOnSubscribe() {
