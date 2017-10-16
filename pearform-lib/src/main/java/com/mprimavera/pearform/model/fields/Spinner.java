@@ -23,6 +23,7 @@ public class Spinner<T extends Serializable> extends FieldWidget {
     private SpinnerListener mListener;
     private boolean mItemSelected;
     private int mSelectedIndex;
+    private boolean mMandatory;
 
     public interface SpinnerListener<T> {
         void onItemSelected(T item);
@@ -55,6 +56,7 @@ public class Spinner<T extends Serializable> extends FieldWidget {
         mListener = null;
         mLabels = null;
         mResultKey = null;
+        mMandatory = false;
         mSpinner = findViewById(R.id.materialSpinner);
     }
 
@@ -133,8 +135,13 @@ public class Spinner<T extends Serializable> extends FieldWidget {
         });
     }
 
+    public Spinner mandatory(boolean mandatory) {
+        mMandatory = mandatory;
+        return this;
+    }
+
     @Override public boolean validate() {
-        if(mItemSelected) return true; // Requires selection by default
+        if(mItemSelected || !mMandatory) return true; // Requires selection by default
         else return false;
     }
 
