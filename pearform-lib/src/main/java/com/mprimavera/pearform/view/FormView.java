@@ -26,8 +26,9 @@ public class FormView extends LinearLayout implements IForm {
     private List<FormRow> mRows;
     private Context mContext;
     private FormBuilder mFormBuilder;
-
+    private Bundle mBundle;
     private LinearLayout mLayout;
+    private boolean mClickable;
 
     private class FormRow {
         private View mView;
@@ -110,10 +111,12 @@ public class FormView extends LinearLayout implements IForm {
         mRows = new ArrayList<>();
         mFormBuilder = new FormBuilder(getContext());
         mLayout = findViewById(R.id.layout);
+        mClickable = true;
     }
 
     public FormView build() {
-        this.insertRows();
+            this.insertRows();
+//        else prefill(mBundle);
         return this;
     }
 
@@ -124,13 +127,18 @@ public class FormView extends LinearLayout implements IForm {
     @Override public FormView prefillWhen(boolean prefill, Bundle bundle) {
         if(!prefill) return this;
 
+        prefill(bundle);
+        return this;
+    }
+
+    public void prefill(Bundle bundle) {
+        mBundle = bundle;
         for(FormRow row : mRows) {
             if(row.isField()) {
                 IField field = (IField) row.getView();
                 field.prefill(bundle);
             }
         }
-        return this;
     }
 
     public FormView validateWith(MenuItem menuItem, final IFormValidationListener listener) {
@@ -238,6 +246,21 @@ public class FormView extends LinearLayout implements IForm {
             }
         }
         return true;
+    }
+
+    @Override public void setClickable(boolean clickable) {
+        mClickable = clickable;
+        for (FormRow row : mRows) {
+            if(row.isField()) {
+                IField field = (IField) row.getView();
+                if(clickable) field.enable();
+                else field.disable();
+            }
+        }
+    }
+
+    @Override public boolean isClickable() {
+        return mClickable;
     }
 
     @Override public Bundle getResult() {
