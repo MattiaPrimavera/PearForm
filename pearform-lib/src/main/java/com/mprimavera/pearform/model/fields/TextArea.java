@@ -41,6 +41,14 @@ public class TextArea extends FieldWidget {
         mText = findViewById(R.id.text);
     }
 
+    @Override public void enable() {
+        mText.setClickable(true);
+    }
+
+    @Override public void disable() {
+        mText.setClickable(false);
+    }
+
     @Override public boolean validate() {
         return true;
     }

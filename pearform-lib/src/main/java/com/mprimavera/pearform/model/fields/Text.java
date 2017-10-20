@@ -35,7 +35,7 @@ public class Text extends FieldWidget {
 
     public void init() {
         inflate(getContext(), R.layout.form_text_field, this);
-        mTextView = (TextView) findViewById(R.id.input_text);
+        mTextView = findViewById(R.id.input_text);
     }
 
     public void setTextColor(int color) {
@@ -45,6 +45,14 @@ public class Text extends FieldWidget {
     public void setText(String text) { mTextView.setText(text); }
     @Override public boolean validate() {
         return true;
+    }
+
+    @Override public void enable() {
+        this.mTextView.setClickable(true);
+    }
+
+    @Override public void disable() {
+        mTextView.setClickable(false);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,8 +77,18 @@ public class Switch extends FieldWidget {
 
     @Override
     public void prefill(Bundle bundle) {
-        boolean enabled = bundle.getBoolean(mResultKey);
-        mSwitch.setEnabled(enabled);
+        if(bundle != null) {
+            boolean enabled = bundle.getBoolean(mResultKey);
+            mSwitch.setChecked(enabled);
+        }
+    }
+
+    @Override public void disable() {
+        mSwitch.setClickable(false);
+    }
+
+    @Override public void enable() {
+        mSwitch.setClickable(true);
     }
 
     @Override

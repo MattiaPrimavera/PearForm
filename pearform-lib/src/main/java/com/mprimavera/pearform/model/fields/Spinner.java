@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -161,16 +162,37 @@ public class Spinner<T extends Serializable> extends FieldWidget {
 
     @Override
     public void prefill(Bundle bundle) {
-        if(mResultKey != null) {
+        if(mResultKey != null && bundle != null) {
             int value = bundle.getInt(mResultKey);
             if(value != 0) {
-                if(value > 0 && value < (mLabels.length - 1)) {
+                if(value >= 0 && value <= (mLabels.length - 1)) {
                     mSpinner.setText(mLabels[value]);
                     mSelectedIndex = value;
                     mItemSelected = true;
                 }
             }
         }
+    }
+
+    @Override public void disable() {
+        mSpinner.setFocusable(false);
+        mSpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+    }
+
+    @Override public void enable() {
+        mSpinner.setActivated(true);
+        mSpinner.setEnabled(true);
+        mSpinner.setClickable(true);
+        mSpinner.setFocusable(true);
+        mSpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
     }
 
     @Override

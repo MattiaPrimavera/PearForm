@@ -8,4 +8,6 @@ public interface IField {
     void prefill(Bundle bundle);
     void reset();
     void setValidator(IValidator validator);
+    void disable();
+    void enable();
 }

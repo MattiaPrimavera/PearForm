@@ -63,4 +63,7 @@ abstract public class FieldWidget extends LinearLayout implements IField {
     public void showIcon() {
         mLeftIcon.setVisibility(View.VISIBLE);
     }
+
+    @Override public void enable() {}
+    @Override public void disable() {}
 }

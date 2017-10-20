@@ -94,8 +94,20 @@ public class MaterialText extends FieldWidget {
 
     @Override
     public void prefill(Bundle bundle) {
-        String prefill = bundle.getString(mResultKey);
-        if(prefill != null) mInputText.setText(prefill);
+        if(bundle != null) {
+            String prefill = bundle.getString(mResultKey);
+            if(prefill != null) mInputText.setText(prefill);
+        }
+    }
+
+    @Override public void disable() {
+        mInputText.setEnabled(false);
+        mInputLayout.setEnabled(false);
+    }
+
+    @Override public void enable() {
+        mInputText.setEnabled(true);
+        mInputLayout.setEnabled(true);
     }
 
     @Override

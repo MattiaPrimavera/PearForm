@@ -64,6 +64,14 @@ public class CheckBox extends FieldWidget {
         return this;
     }
 
+    @Override public void enable() {
+        this.checkBox.setClickable(true);
+    }
+
+    @Override public void disable() {
+        this.checkBox.setClickable(false);
+    }
+
     public void setChecked(boolean checked) { this.checkBox.setChecked(checked); }
     public void setLabel(int res) { this.label.setText(res); }
     public void setLabel(String label) { this.label.setText(label); }
