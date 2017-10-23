@@ -14,6 +14,8 @@ import com.mprimavera.pearform.contracts.IField;
 import com.mprimavera.pearform.contracts.IForm;
 import com.mprimavera.pearform.contracts.IFormValidationListener;
 import com.mprimavera.pearform.R;
+import com.mprimavera.pearform.tools.DrawableTools;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import io.reactivex.annotations.NonNull;
 
 public class FormView extends LinearLayout implements IForm {
     private List<FormRow> mRows;
-    private Context mContext;
+    protected Context mContext;
     private FormBuilder mFormBuilder;
     private Bundle mBundle;
     private LinearLayout mLayout;
@@ -47,27 +49,32 @@ public class FormView extends LinearLayout implements IForm {
 
     public FormView(Context context) {
         super(context);
-        this.init();
+        this.init(context);
     }
 
     public FormView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.init();
+        this.init(context);
     }
 
     public FormView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.init();
+        this.init(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public FormView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        this.init();
+        this.init(context);
     }
 
     public FormView divider(Drawable divider) {
         mLayout.setDividerDrawable(divider);
+        return this;
+    }
+
+    public FormView divider(int dividerRes) {
+        mLayout.setDividerDrawable(DrawableTools.getDrawable(mContext, dividerRes));
         return this;
     }
 
@@ -106,8 +113,9 @@ public class FormView extends LinearLayout implements IForm {
         return this;
     }
 
-    @Override public void init() {
+    @Override public void init(Context context) {
         inflate(getContext(), R.layout.widget_form_view, this);
+        mContext = context;
         mRows = new ArrayList<>();
         mFormBuilder = new FormBuilder(getContext());
         mLayout = findViewById(R.id.layout);
