@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.mprimavera.pearform.model.fields.material.MaterialText
-        android:id="@+id/first"
+    <LinearLayout
         android:layout_weight="0.5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
 
-    <com.mprimavera.pearform.model.fields.material.MaterialText
-        android:id="@+id/second"
+        <com.mprimavera.pearform.model.fields.material.MaterialText
+            android:id="@+id/first"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_weight="0.5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <com.mprimavera.pearform.model.fields.material.MaterialText
+            android:id="@+id/second"
+            android:minWidth="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </LinearLayout>
