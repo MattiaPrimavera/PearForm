@@ -61,6 +61,11 @@ public class MaterialText extends FieldWidget {
         return this;
     }
 
+    public MaterialText hintColor(int style) {
+        mInputLayout.setHintTextAppearance(style);
+        return this;
+    }
+
     public MaterialText hint(String hint) {
         mInputLayout.setHintEnabled(true);
         mInputLayout.setHintAnimationEnabled(true);

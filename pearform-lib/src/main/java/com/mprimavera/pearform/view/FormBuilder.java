@@ -1,6 +1,8 @@
 package com.mprimavera.pearform.view;
 
 import android.content.Context;
+
+import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.fields.Spinner;
 import com.mprimavera.pearform.model.fields.Switch;
 import com.mprimavera.pearform.model.fields.material.MaterialDoubleText;
@@ -37,7 +39,8 @@ public class FormBuilder {
         return new MaterialText(mContext)
                 .hint(hint)
                 .resultKey(resultBundleKey)
-                .validator(fieldValidator);
+                .validator(fieldValidator)
+                .hintColor(R.style.MaterialTextAppearance);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error, MaterialText.IFieldValidator fieldValidator) {
