@@ -3,6 +3,7 @@ package com.mprimavera.pearform.view;
 import android.content.Context;
 import com.mprimavera.pearform.model.fields.Spinner;
 import com.mprimavera.pearform.model.fields.Switch;
+import com.mprimavera.pearform.model.fields.material.MaterialDoubleText;
 import com.mprimavera.pearform.model.fields.material.MaterialText;
 
 public class FormBuilder {
@@ -53,6 +54,14 @@ public class FormBuilder {
                 .error(error)
                 .resultKey(resultBundleKey)
                 .validator(fieldValidator);
+    }
+
+    public MaterialDoubleText doubleText(String []hints, String []errors, String []resultKeys) {
+        return new MaterialDoubleText(mContext)
+            .hints(hints)
+            .errors(errors)
+            .resultKeys(resultKeys)
+            .build();
     }
 
     public Spinner spinner(String resultBundleKey) {
