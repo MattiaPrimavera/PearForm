@@ -22,9 +22,12 @@ public class MaterialText extends FieldWidget {
         super(context);
         init(context);
     }
+
     public MaterialText(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
+
     public MaterialText(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
@@ -98,6 +101,11 @@ public class MaterialText extends FieldWidget {
             String prefill = bundle.getString(mResultKey);
             if(prefill != null) mInputText.setText(prefill);
         }
+    }
+
+    public MaterialText prefillWhen(boolean condition, Bundle bundle) {
+        if(condition) prefill(bundle);
+        return this;
     }
 
     @Override public void disable() {
