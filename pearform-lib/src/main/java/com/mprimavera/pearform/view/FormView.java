@@ -30,7 +30,7 @@ public class FormView extends LinearLayout implements IForm {
     private FormBuilder mFormBuilder;
     private Bundle mBundle;
     private LinearLayout mLayout;
-    private boolean mClickable;
+    private boolean mClickable, mAlreadyBuilt;
 
     private class FormRow {
         private View mView;
@@ -79,6 +79,8 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     public FormView add(View view) {
+        if(mAlreadyBuilt) return this;
+
         FormRow row;
         try {
             IField field = (IField)view;
@@ -91,6 +93,8 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     public FormView addIf(boolean condition, IField field) {
+        if(mAlreadyBuilt) return this;
+
         if(condition) {
             this.add((View) field);
         }
@@ -98,6 +102,8 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     public FormView addWhen(boolean condition, IField field) {
+        if(mAlreadyBuilt) return this;
+
         return this.addIf(condition, field);
     }
 
@@ -120,10 +126,14 @@ public class FormView extends LinearLayout implements IForm {
         mFormBuilder = new FormBuilder(getContext());
         mLayout = findViewById(R.id.layout);
         mClickable = true;
+        mAlreadyBuilt = false;
     }
 
     public FormView build() {
+        if(!mAlreadyBuilt)
             this.insertRows();
+
+        mAlreadyBuilt = true;
 //        else prefill(mBundle);
         return this;
     }
@@ -133,6 +143,8 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     @Override public FormView prefillWhen(boolean prefill, Bundle bundle) {
+        if(mAlreadyBuilt) return this;
+
         if(!prefill) return this;
 
         prefill(bundle);
