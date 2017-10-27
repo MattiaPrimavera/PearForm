@@ -87,12 +87,14 @@ public class MaterialDoubleText extends FieldWidget {
             .hint(mHints[0])
             .error(mErrors[0])
             .resultKey(mResultKeys[0])
+            .hintColor(R.style.MaterialTextAppearance)
             .prefillWhen(true, mBundle);
 
         mSecond
             .hint(mHints[1])
             .error(mErrors[1])
             .resultKey(mResultKeys[1])
+            .hintColor(R.style.MaterialTextAppearance)
             .prefillWhen(true, mBundle);
 
         return this;
