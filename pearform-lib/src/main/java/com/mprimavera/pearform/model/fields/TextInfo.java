@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.mprimavera.pearform.R;
@@ -52,6 +53,16 @@ public class TextInfo extends FieldWidget {
 
     public TextInfo label(String label) {
         setLabel(label);
+        return this;
+    }
+
+    public TextInfo labelSize(float size) {
+        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        return this;
+    }
+
+    public TextInfo textSize(float size) {
+        mText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         return this;
     }
 
