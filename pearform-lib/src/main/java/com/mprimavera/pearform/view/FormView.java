@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -29,7 +30,7 @@ public class FormView extends LinearLayout implements IForm {
     protected Context mContext;
     private FormBuilder mFormBuilder;
     private Bundle mBundle;
-    private LinearLayout mLayout;
+    private LinearLayout mLayout, mFormContainer;
     private boolean mClickable, mAlreadyBuilt;
 
     private class FormRow {
@@ -80,6 +81,10 @@ public class FormView extends LinearLayout implements IForm {
 
     public FormView add(View view) {
         if(mAlreadyBuilt) return this;
+        if(view == null) {
+            Log.d("TEST", "FormView field not ADDED error!");
+            return this;
+        }
 
         FormRow row;
         try {
@@ -119,12 +124,19 @@ public class FormView extends LinearLayout implements IForm {
         return this;
     }
 
+    public FormView size(int width, int height) {
+        LinearLayout.LayoutParams params = new LayoutParams(width, height);
+        mFormContainer.setLayoutParams(params);
+        return this;
+    }
+
     @Override public void init(Context context) {
         inflate(getContext(), R.layout.widget_form_view, this);
         mContext = context;
         mRows = new ArrayList<>();
         mFormBuilder = new FormBuilder(getContext());
         mLayout = findViewById(R.id.layout);
+        mFormContainer = findViewById(R.id.formContainer);
         mClickable = true;
         mAlreadyBuilt = false;
     }
@@ -260,6 +272,7 @@ public class FormView extends LinearLayout implements IForm {
             if(row.isField()) {
                 IField field = (IField) row.getView();
                 boolean validField = field.validate();
+                Log.d("TEST", "Validating field: " + field + "valid: " + validField);
                 if(!validField) {
                     return false;
                 }
