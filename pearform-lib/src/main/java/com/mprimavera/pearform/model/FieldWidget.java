@@ -16,6 +16,7 @@ abstract public class FieldWidget extends LinearLayout implements IField {
     protected ImageView mLeftIcon;
     protected Context mContext;
     protected LinearLayout mLayout;
+    protected Bundle mBundle;
 
     public FieldWidget(Context context) {
         super(context);
