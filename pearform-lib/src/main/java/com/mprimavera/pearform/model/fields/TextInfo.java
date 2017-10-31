@@ -11,6 +11,8 @@ import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.model.FieldWidget;
 
+import java.util.FormatFlagsConversionMismatchException;
+
 public class TextInfo extends FieldWidget {
     private LinearLayout mLayout;
     private TextView mLabel, mText;
@@ -69,6 +71,14 @@ public class TextInfo extends FieldWidget {
     @Override public void prefill(Bundle bundle) {}
     @Override public void reset() {}
     @Override public void setValidator(IValidator validator) {}
-    @Override public boolean validate() { return false; }
-    @Override public Bundle getValue() { return null; }
+    @Override public boolean validate() { return true; }
+    @Override public Bundle getValue() {
+        String text = mText.getText().toString();
+        Bundle result = new Bundle();
+
+        if(text != null) {
+            result.putString(mResultKey, text);
+            return result;
+        } else return null;
+    }
 }
