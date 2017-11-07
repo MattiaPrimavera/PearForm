@@ -100,6 +100,10 @@ public class MaterialText extends FieldWidget {
         return bundle;
     }
 
+    public String getStringValue() {
+        return mInputText.getText().toString();
+    }
+
     @Override
     public void prefill(Bundle bundle) {
         if(bundle != null) {

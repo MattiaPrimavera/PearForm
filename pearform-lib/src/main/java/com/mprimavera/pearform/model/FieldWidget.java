@@ -21,21 +21,25 @@ abstract public class FieldWidget extends LinearLayout implements IField {
     public FieldWidget(Context context) {
         super(context);
         mContext = context;
+        mBundle = new Bundle();
     }
 
     public FieldWidget(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+        mBundle = new Bundle();
     }
 
     public FieldWidget(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
+        mBundle = new Bundle();
     }
 
     public FieldWidget(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mContext = context;
+        mBundle = new Bundle();
     }
 
     @Override public abstract boolean validate();

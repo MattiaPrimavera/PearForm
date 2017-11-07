@@ -45,6 +45,11 @@ public class TextInfo extends FieldWidget {
         mText = mLayout.findViewById(R.id.text);
     }
 
+    public TextInfo resultKey(String key) {
+        mResultKey = key;
+        return this;
+    }
+
     public void setText(String text) { mText.setText(text); }
     public void setLabel(String label) { mLabel.setText(label); }
 
@@ -68,7 +73,18 @@ public class TextInfo extends FieldWidget {
         return this;
     }
 
-    @Override public void prefill(Bundle bundle) {}
+    public TextInfo prefillWhen(boolean condition, Bundle bundle) {
+        if(condition && bundle != null) prefill(bundle);
+        return this;
+    }
+
+    @Override public void prefill(Bundle bundle) {
+        if(bundle != null) {
+            String text = bundle.getString(mResultKey);
+            if(text != null) mText.setText(text);
+        }
+    }
+
     @Override public void reset() {}
     @Override public void setValidator(IValidator validator) {}
     @Override public boolean validate() { return true; }
