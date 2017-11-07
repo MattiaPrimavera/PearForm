@@ -5,6 +5,7 @@ import android.content.Context;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.fields.Spinner;
 import com.mprimavera.pearform.model.fields.Switch;
+import com.mprimavera.pearform.model.fields.TextInfo;
 import com.mprimavera.pearform.model.fields.material.MaterialDoubleText;
 import com.mprimavera.pearform.model.fields.material.MaterialText;
 
@@ -59,6 +60,12 @@ public class FormBuilder {
                 .validator(fieldValidator);
     }
 
+    public TextInfo textInfo(String resultBundleKey, String label) {
+        return new TextInfo(mContext)
+            .resultKey(resultBundleKey)
+            .label(label);
+    }
+
     public MaterialDoubleText doubleText(String []hints, String []errors, String []resultKeys) {
         return new MaterialDoubleText(mContext)
             .hints(hints)
@@ -73,9 +80,14 @@ public class FormBuilder {
         return spinner;
     }
 
-    public Switch switcher(String resultBundleKey, String text, int iconResource) {
+    public Switch switcher(String resultBundleKey, String text) {
         Switch switcher = new Switch(mContext).init(text);
         switcher.setResultKey(resultBundleKey);
+        return switcher;
+    }
+
+    public Switch switcher(String resultBundleKey, String text, int iconResource) {
+        Switch switcher = switcher(resultBundleKey, text);
         switcher.setIconResource(iconResource);
         return switcher;
     }
