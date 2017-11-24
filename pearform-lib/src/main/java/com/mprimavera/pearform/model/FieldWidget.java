@@ -44,11 +44,16 @@ abstract public class FieldWidget extends LinearLayout implements IField {
 
     @Override public abstract boolean validate();
     @Override public abstract Bundle getValue();
+    public void highlight() {}
+    public void disableHighlight() {};
 
     @Override public void setResultKey(String key) {
         mResultKey = key;
     }
 
+    public boolean hasFieldBeenUpdated(Bundle bundle) {
+        return false;
+    }
 
     public void setIconResource(int resource) {
         mLeftIcon.setImageResource(resource);

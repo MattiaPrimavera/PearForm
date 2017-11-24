@@ -15,6 +15,7 @@ import com.mprimavera.pearform.contracts.IField;
 import com.mprimavera.pearform.contracts.IForm;
 import com.mprimavera.pearform.contracts.IFormValidationListener;
 import com.mprimavera.pearform.R;
+import com.mprimavera.pearform.model.FieldWidget;
 import com.mprimavera.pearform.tools.DrawableTools;
 
 import java.util.ArrayList;
@@ -76,6 +77,26 @@ public class FormView extends LinearLayout implements IForm {
 
     public FormView divider(int dividerRes) {
         mLayout.setDividerDrawable(DrawableTools.getDrawable(mContext, dividerRes));
+        return this;
+    }
+
+    public int getSize() {
+        return mRows.size();
+    }
+
+    public FormView addDynamic(View view) {
+        if(view != null) {
+            FormRow row;
+            try {
+                IField field = (IField)view;
+                row = new FormRow(view, true);
+            } catch (ClassCastException e) {
+                row = new FormRow(view, false);
+            }
+            mRows.add(row);
+            mLayout.addView(view);
+        }
+
         return this;
     }
 
@@ -141,6 +162,15 @@ public class FormView extends LinearLayout implements IForm {
         mAlreadyBuilt = false;
     }
 
+    public void disableHighlight() {
+        for(FormRow row : mRows) {
+            if(row.isField()) {
+                FieldWidget field = (FieldWidget) row.getView();
+                field.disableHighlight();
+            }
+        }
+    }
+
     public FormView build() {
         if(!mAlreadyBuilt)
             this.insertRows();
@@ -155,7 +185,7 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     @Override public FormView prefillWhen(boolean prefill, Bundle bundle) {
-        if(mAlreadyBuilt) return this;
+//        if(mAlreadyBuilt) return this;
 
         if(!prefill) return this;
 
@@ -254,6 +284,10 @@ public class FormView extends LinearLayout implements IForm {
                 field.reset();
             }
         }
+    }
+
+    public void refresh() {
+        insertRows();
     }
 
     private void insertRows() {
