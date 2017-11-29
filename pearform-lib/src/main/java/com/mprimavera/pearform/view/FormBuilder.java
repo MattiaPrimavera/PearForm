@@ -81,14 +81,14 @@ public class FormBuilder {
     }
 
     public Switch switcher(String resultBundleKey, String text) {
-        Switch switcher = new Switch(mContext).init(text);
-        switcher.setResultKey(resultBundleKey);
+        Switch switcher = new Switch(mContext)
+            .text(text)
+            .resultKey(resultBundleKey);
         return switcher;
     }
 
     public Switch switcher(String resultBundleKey, String text, int iconResource) {
-        Switch switcher = switcher(resultBundleKey, text);
-        switcher.setIconResource(iconResource);
-        return switcher;
+        return switcher(resultBundleKey, text)
+            .icon(iconResource);
     }
 }

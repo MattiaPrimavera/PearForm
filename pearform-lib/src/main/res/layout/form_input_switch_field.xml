@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/text"
         android:drawablePadding="10dp"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:text="External"
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
