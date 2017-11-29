@@ -64,12 +64,12 @@ public class TextInfo extends FieldWidget {
     }
 
     public TextInfo labelSize(float size) {
-        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         return this;
     }
 
     public TextInfo textSize(float size) {
-        mText.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        mText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         return this;
     }
 
