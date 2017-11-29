@@ -50,7 +50,7 @@ abstract public class FieldWidget extends LinearLayout implements IField {
     @Override public void setResultKey(String key) {
         mResultKey = key;
     }
-
+    public String getResultKey() { return mResultKey; }
     public boolean hasFieldBeenUpdated(Bundle bundle) {
         return false;
     }
