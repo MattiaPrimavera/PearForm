@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mprimavera.pearform.R;
@@ -33,8 +34,8 @@ public class CheckBox extends FieldWidget {
     @Override
     public Bundle getValue() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean(mResultKey, this.checkBox.isEnabled());
-        return null;
+        bundle.putBoolean(mResultKey, this.checkBox.isChecked());
+        return bundle;
     }
 
     private void init() {
@@ -62,6 +63,10 @@ public class CheckBox extends FieldWidget {
     public CheckBox checked() {
         this.setChecked(true);
         return this;
+    }
+
+    public void setOnCheckedChanged(CompoundButton.OnCheckedChangeListener listener) {
+        this.checkBox.setOnCheckedChangeListener(listener);
     }
 
     @Override public void enable() {
