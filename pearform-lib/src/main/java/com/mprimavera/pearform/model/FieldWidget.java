@@ -1,10 +1,12 @@
 package com.mprimavera.pearform.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +19,8 @@ abstract public class FieldWidget extends LinearLayout implements IField {
     protected Context mContext;
     protected LinearLayout mLayout;
     protected Bundle mBundle;
+    protected Activity mActivity;
+    protected Fragment mFragment;
 
     public FieldWidget(Context context) {
         super(context);
@@ -40,6 +44,22 @@ abstract public class FieldWidget extends LinearLayout implements IField {
         super(context, attrs, defStyleAttr, defStyleRes);
         mContext = context;
         mBundle = new Bundle();
+    }
+
+
+    public FieldWidget activity(Activity activity) {
+        mActivity = activity;
+        return this;
+    }
+
+    public FieldWidget fragment(Fragment fragment) {
+        mFragment = fragment;
+        return this;
+    }
+
+    public FieldWidget resultKey(String key) {
+        this.setResultKey(key);
+        return this;
     }
 
     @Override public abstract boolean validate();
