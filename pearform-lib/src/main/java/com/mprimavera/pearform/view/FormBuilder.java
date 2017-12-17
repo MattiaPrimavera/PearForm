@@ -52,6 +52,15 @@ public class FormBuilder {
                 .validator(fieldValidator);
     }
 
+    public MaterialText email(String resultBundleKey, String hint, String error, MaterialText.IFieldValidator fieldValidator) {
+        return new MaterialText(mContext)
+            .typeEmail()
+            .hint(hint)
+            .error(error)
+            .resultKey(resultBundleKey)
+            .validator(fieldValidator);
+    }
+
     public MaterialText text(String resultBundleKey, String hint, String error, int iconResource, MaterialText.IFieldValidator fieldValidator) {
         return new MaterialText(mContext)
                 .hint(hint)

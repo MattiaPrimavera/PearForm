@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import com.mprimavera.pearform.contracts.IValidator;
@@ -48,6 +49,11 @@ public class MaterialText extends FieldWidget {
 
     public MaterialText resultKey(String key) {
         this.setResultKey(key);
+        return this;
+    }
+
+    public MaterialText typeEmail() {
+        mInputText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS );
         return this;
     }
 
@@ -158,15 +164,12 @@ public class MaterialText extends FieldWidget {
     }
 
     public static MaterialText.IFieldValidator minLengthValidator(final int length) {
-        return new IFieldValidator() {
-            @Override
-            public boolean validate(TextInputEditText textView) {
-                String text = textView.getText().toString();
-                if (text == null) return false;
-                else {
-                    if (text.length() > length) return true;
-                    else return false;
-                }
+        return textView -> {
+            String text = textView.getText().toString();
+            if (text == null) return false;
+            else {
+                if (text.length() > length) return true;
+                else return false;
             }
         };
     }
