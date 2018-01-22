@@ -3,17 +3,19 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.design.widget.TextInputEditText
             android:maxLines="1"
             android:inputType="textCapSentences"
             android:hint="Test hint"
             android:id="@+id/input_text"
+            android:textSize="@dimen/text_info_widget_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </android.support.design.widget.TextInputLayout>

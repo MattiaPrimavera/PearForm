@@ -17,14 +17,10 @@ import com.mprimavera.pearform.contracts.IFormValidationListener;
 import com.mprimavera.pearform.R;
 import com.mprimavera.pearform.model.FieldWidget;
 import com.mprimavera.pearform.tools.DrawableTools;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.annotations.NonNull;
 
 public class FormView extends LinearLayout implements IForm {
     private List<FormRow> mRows;
@@ -229,36 +225,28 @@ public class FormView extends LinearLayout implements IForm {
     }
 
     public Observable<Bundle> rxValidateWith(final View button) {
-        final Observable formResult = Observable.create(new ObservableOnSubscribe() {
+        final Observable formResult = Observable.create((ObservableOnSubscribe) e -> button.setOnClickListener(new OnClickListener() {
             @Override
-            public void subscribe(final @NonNull ObservableEmitter e) throws Exception {
-            button.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                if(validate()) {
-                    Bundle resultBundle = getResult();
-                    e.onNext(resultBundle);
-                    e.onComplete();
-                } else e.onError(new Exception("Form not Valid"));
-            }
-            });
-            }
-        });
+            public void onClick(View view) {
+            if(validate()) {
+                Bundle resultBundle = getResult();
+                e.onNext(resultBundle);
+                e.onComplete();
+            } else e.onError(new Exception("Form not Valid"));
+        }
+        }));
 
         return formResult;
     }
 
     @Override
     public FormView validateWith(View button, final IFormValidationListener listener) {
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        button.setOnClickListener(view -> {
             if(validate()) {
                 Bundle resultBundle = getResult();
                 listener.onSuccess(resultBundle);
             } else {
                 listener.onError();
-            }
             }
         });
 
@@ -267,13 +255,7 @@ public class FormView extends LinearLayout implements IForm {
 
     @Override
     public FormView resetWith(View button) {
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                reset();
-            }
-        });
-
+        button.setOnClickListener(view -> reset());
         return this;
     }
 

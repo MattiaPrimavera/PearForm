@@ -4,10 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.mprimavera.pearform.contracts.IValidator;
 import com.mprimavera.pearform.R;
@@ -126,13 +122,11 @@ public class Spinner<T extends Serializable> extends FieldWidget {
     }
 
     private void setupListener() {
-        mSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mSpinner.setOnItemClickListener((parent, view, position, id) -> {
             mItemSelected = true;
             mSelectedIndex = position;
-            if (mListener != null) mListener.onItemSelected(mElements.get(position));
-            }
+            if (mListener != null)
+                mListener.onItemSelected(mElements.get(position));
         });
     }
 
@@ -163,11 +157,11 @@ public class Spinner<T extends Serializable> extends FieldWidget {
     @Override
     public void prefill(Bundle bundle) {
         if(mResultKey != null && bundle != null) {
-            int value = bundle.getInt(mResultKey);
+            int value = bundle.getInt(mResultKey); // TODO restore this line, remove two above
             if(value != 0) {
                 if(value >= 0 && value <= (mLabels.length - 1)) {
-                    mSpinner.setText(mLabels[value]);
-                    mSelectedIndex = value;
+                    mSpinner.setText(mLabels[value - 1]); // IDs start from 1, arrays from 0
+                    mSelectedIndex = value - 1;
                     mItemSelected = true;
                 }
             }
@@ -176,11 +170,7 @@ public class Spinner<T extends Serializable> extends FieldWidget {
 
     @Override public void disable() {
         mSpinner.setFocusable(false);
-        mSpinner.setOnTouchListener(new View.OnTouchListener() {
-            @Override public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
+        mSpinner.setOnTouchListener((view, motionEvent) -> true);
     }
 
     @Override public void enable() {
@@ -188,11 +178,7 @@ public class Spinner<T extends Serializable> extends FieldWidget {
         mSpinner.setEnabled(true);
         mSpinner.setClickable(true);
         mSpinner.setFocusable(true);
-        mSpinner.setOnTouchListener(new View.OnTouchListener() {
-            @Override public boolean onTouch(View view, MotionEvent motionEvent) {
-                return false;
-            }
-        });
+        mSpinner.setOnTouchListener((view, motionEvent) -> false);
     }
 
     @Override

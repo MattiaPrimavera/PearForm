@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_info_widget_label_size">11sp</dimen>
+    <dimen name="text_info_widget_text_size">14sp</dimen>
+
+    <dimen name="form_card_title_size">16sp</dimen>
+    <dimen name="form_card_text_size">14sp</dimen>
+    <dimen name="form_card_padding_left">2dp</dimen>
+
+    <dimen name="material_spinner_label_text_size">@dimen/text_info_widget_label_size</dimen>
+    <dimen name="material_spinner_text_size">@dimen/text_info_widget_text_size</dimen>
+</resources>
