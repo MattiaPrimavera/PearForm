@@ -201,15 +201,12 @@ public class FormView extends LinearLayout implements IForm {
 
     public FormView validateWith(MenuItem menuItem, final IFormValidationListener listener) {
         if(listener == null) return null;
-        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                if(validate()) {
-                    Bundle resultBundle = getResult();
-                    listener.onSuccess(resultBundle);
-                } else listener.onError();
-                return false;
-            }
+        menuItem.setOnMenuItemClickListener(menuItem1 -> {
+            if(validate()) {
+                Bundle resultBundle = getResult();
+                listener.onSuccess(resultBundle);
+            } else listener.onError();
+            return false;
         });
 
         return this;
@@ -312,6 +309,10 @@ public class FormView extends LinearLayout implements IForm {
         return mClickable;
     }
 
+    /*
+        No validation is performed by this method call.
+        To validate the form, use validate()
+     */
     @Override public Bundle getResult() {
         Bundle bundle = new Bundle();
         for (FormRow row : mRows) {
