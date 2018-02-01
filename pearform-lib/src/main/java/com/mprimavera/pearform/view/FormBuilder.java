@@ -9,6 +9,9 @@ import com.mprimavera.pearform.model.fields.TextInfo;
 import com.mprimavera.pearform.model.fields.material.MaterialDoubleText;
 import com.mprimavera.pearform.model.fields.material.MaterialText;
 
+/*
+    Helper class for easily building fields
+ */
 public class FormBuilder {
     private Context mContext;
 
@@ -18,8 +21,8 @@ public class FormBuilder {
 
     public MaterialText text(String hint, String error) {
         return new MaterialText(mContext)
-                .hint(hint)
-                .error(error);
+            .hint(hint)
+            .error(error);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error) {
@@ -31,25 +34,25 @@ public class FormBuilder {
 
     public MaterialText text(String resultBundleKey, String hint, String error, int iconResource) {
         return new MaterialText(mContext)
-                .hint(hint)
-                .error(error)
-                .resultKey(resultBundleKey);
+            .hint(hint)
+            .error(error)
+            .resultKey(resultBundleKey);
     }
 
     public MaterialText text(String resultBundleKey, String hint, MaterialText.IFieldValidator fieldValidator) {
         return new MaterialText(mContext)
-                .hint(hint)
-                .resultKey(resultBundleKey)
-                .validator(fieldValidator)
-                .hintColor(R.style.MaterialTextAppearance);
+            .hint(hint)
+            .resultKey(resultBundleKey)
+            .validator(fieldValidator)
+            .hintColor(R.style.MaterialTextAppearance);
     }
 
     public MaterialText text(String resultBundleKey, String hint, String error, MaterialText.IFieldValidator fieldValidator) {
         return new MaterialText(mContext)
-                .hint(hint)
-                .error(error)
-                .resultKey(resultBundleKey)
-                .validator(fieldValidator);
+            .hint(hint)
+            .error(error)
+            .resultKey(resultBundleKey)
+            .validator(fieldValidator);
     }
 
     public MaterialText email(String resultBundleKey, String hint, String error, MaterialText.IFieldValidator fieldValidator) {
@@ -63,10 +66,10 @@ public class FormBuilder {
 
     public MaterialText text(String resultBundleKey, String hint, String error, int iconResource, MaterialText.IFieldValidator fieldValidator) {
         return new MaterialText(mContext)
-                .hint(hint)
-                .error(error)
-                .resultKey(resultBundleKey)
-                .validator(fieldValidator);
+            .hint(hint)
+            .error(error)
+            .resultKey(resultBundleKey)
+            .validator(fieldValidator);
     }
 
     public TextInfo textInfo(String resultBundleKey, String label) {

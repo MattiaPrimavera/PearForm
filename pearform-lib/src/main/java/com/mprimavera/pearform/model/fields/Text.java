@@ -41,16 +41,13 @@ public class Text extends FieldWidget {
     public void setTextColor(int color) {
         mTextView.setTextColor(color);
     }
-
     public void setText(String text) { mTextView.setText(text); }
     @Override public boolean validate() {
         return true;
     }
-
     @Override public void enable() {
         this.mTextView.setClickable(true);
     }
-
     @Override public void disable() {
         mTextView.setClickable(false);
     }
@@ -68,13 +65,8 @@ public class Text extends FieldWidget {
         if(text != null) mTextView.setText(text);
     }
 
-    @Override
-    public void reset() {
+    @Override public void reset() {
         mTextView.setText(null);
     }
-
-    @Override
-    public void setValidator(IValidator validator) {
-
-    }
+    @Override public void setValidator(IValidator validator) {}
 }

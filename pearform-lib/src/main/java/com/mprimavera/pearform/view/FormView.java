@@ -285,7 +285,10 @@ public class FormView extends LinearLayout implements IForm {
             if(row.isField()) {
                 IField field = (IField) row.getView();
                 boolean validField = field.validate();
-                Log.d("TEST", "Validating field: " + field + "valid: " + validField);
+
+                /*
+                    If there's even a single field which is not VALID, the form will not be VALID
+                 */
                 if(!validField) {
                     return false;
                 }
@@ -316,7 +319,7 @@ public class FormView extends LinearLayout implements IForm {
     @Override public Bundle getResult() {
         Bundle bundle = new Bundle();
         for (FormRow row : mRows) {
-            if(row.isField()) {
+            if(row.isField()) { // Add field input value within the resulting Form Bundle object
                 IField field = (IField) row.getView();
                 Bundle fieldResult = field.getValue();
                 if(fieldResult != null)

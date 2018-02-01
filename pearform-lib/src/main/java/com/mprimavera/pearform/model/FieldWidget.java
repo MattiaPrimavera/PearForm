@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.mprimavera.pearform.contracts.IField;
 
+/*
+    Abstract definition of a PearForm Field Widget
+ */
 abstract public class FieldWidget extends LinearLayout implements IField {
     protected String mResultKey;
     protected ImageView mLeftIcon;
@@ -45,7 +48,6 @@ abstract public class FieldWidget extends LinearLayout implements IField {
         mContext = context;
         mBundle = new Bundle();
     }
-
 
     public FieldWidget activity(Activity activity) {
         mActivity = activity;
